@@ -4,7 +4,7 @@
        DATA DIVISION.
        WORKING-STORAGE SECTION.
 
-       01  WS-CHOICE        PIC 9.
+       01  WS-CHOICE        PIC 9 VALUE 0.
        01  WS-COUNT         PIC 99 VALUE 0.
        01  WS-I             PIC 99.
        01  WS-SEARCH-ID     PIC 9(5).
@@ -15,7 +15,7 @@
               10 WS-EMP-ID   PIC 9(5).
               10 WS-EMP-NAME PIC X(25).
               10 WS-EMP-DEPT PIC X(20).
-              10 WS-EMP-SAL  PIC 9(7)V99.
+              10 WS-EMP-SAL  PIC 9(7).
 
        PROCEDURE DIVISION.
        MAIN-PARA.
