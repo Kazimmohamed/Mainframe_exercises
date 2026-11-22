@@ -1,12 +1,18 @@
 //EMPCOMP  JOB (ACCT),'EMP COMPILE',CLASS=A,MSGCLASS=X,
 //             MSGLEVEL=(1,1),NOTIFY=&SYSUID
-//* --------------------------------------------------
-//* Replace the example dataset names with your own.
-//* --------------------------------------------------
-//COBOL    EXEC IGYCRCTL
+//* Replace all YOUR.* dataset names with your site libraries.
+//COBOL    EXEC PGM=IGYCRCTL,REGION=0M
+//STEPLIB  DD DSN=YOUR.COMPILER.LOADLIB,DISP=SHR
 //SYSIN    DD DSN=YOUR.SOURCE(EMPLOYEE),DISP=SHR
-//SYSLIN   DD DSN=YOUR.OBJ(EMPLOYEE),DISP=SHR
+//SYSLIN   DD DSN=&&OBJSET,DISP=(MOD,PASS),UNIT=SYSDA,
+//             SPACE=(CYL,(1,1))
 //SYSPRINT DD SYSOUT=*
-//SYSOUT   DD SYSOUT=*
-//* Link-edit step depends on your site's procedures
-//* and compiler/runtime configuration.
+//SYSUT1   DD UNIT=SYSDA,SPACE=(CYL,(1,1))
+//LKED     EXEC PGM=IEWL,COND=(0,LT,COBOL)
+//SYSLIN   DD DSN=&&OBJSET,DISP=(OLD,DELETE)
+//SYSLMOD  DD DSN=YOUR.LOADLIB(EMPLOYEE),DISP=SHR
+//SYSPRINT DD SYSOUT=*
+//SYSUT1   DD UNIT=SYSDA,SPACE=(CYL,(1,1))
+//SYSIN    DD *
+ NAME EMPLOYEE(R)
+/*
